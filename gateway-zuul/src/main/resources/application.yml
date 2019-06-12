@@ -1,0 +1,20 @@
+#debug: true
+server:
+  port: 8050
+spring:
+  application:
+    name: gateway-zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password123@localhost:8761/eureka
+zuul:
+  ignored-services: '*'
+  routes:
+    app-provider-user:
+      path: /user/**
+      serviceId: provider-user
+    #通过sidecar调用nodejs的服务
+    app-sidecar:
+      path: /sidecar/**
+      serviceId: sidecar
