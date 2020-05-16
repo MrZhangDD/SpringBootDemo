@@ -1,0 +1,18 @@
+#普通的kv结构
+name: zhang
+
+#对象
+student:
+  name: zhang
+  age: 18
+
+#行内写法
+students: {name: zhang,age: 18}
+
+#数组
+pets:
+  - cat
+  - dog
+  - pig
+#行内写法
+petss: [cat,dog,pig]

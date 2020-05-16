@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!--逆向工程，需要配置此mapper文件，还需要一个mybatis插件，然后启动项maven
+mybatis-generator:generate -e   运行即可-->
+<generatorConfiguration>
+    <!--数据库驱动,最好不要有中文字符,不然会找不到-->
+    <classPathEntry location="D:\SoftWare\maven\mvn_repo\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar" />
+
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接地址账号密码-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/mysql" userId="root" password="root">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--生成Model类存放位置-->
+        <javaModelGenerator targetPackage="com.zhang.pojo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--生成映射文件存放位置.xml-->
+        <sqlMapGenerator targetPackage="com.zhang.mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成DaoMapper类存放位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zhang.mapper" targetProject="src/main/java">
+
+            <property name="enableSubPackages" value="true"/>
+
+        </javaClientGenerator>
+        <!--生成对应表及类名,需要记住的一点是逆向工程无法生成关联关系,只能生成单表操作-->
+        <table schema="build_book" tableName="books"/>
+
+    </context>
+</generatorConfiguration>

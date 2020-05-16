@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhang.mapper.BooksMapper" >
+  <resultMap id="BaseResultMap" type="com.zhang.pojo.Books" >
+    <id column="bookId" property="bookid" jdbcType="BIGINT" />
+    <result column="bookName" property="bookname" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="bookCounts" property="bookcounts" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bookId, bookName, detail, bookCounts
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhang.pojo.BooksExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from books
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from books
+    where bookId = #{bookid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from books
+    where bookId = #{bookid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zhang.pojo.BooksExample" >
+    delete from books
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhang.pojo.Books" >
+    insert into books (bookId, bookName, detail, 
+      bookCounts)
+    values (#{bookid,jdbcType=BIGINT}, #{bookname,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+      #{bookcounts,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhang.pojo.Books" >
+    insert into books
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookid != null" >
+        bookId,
+      </if>
+      <if test="bookname != null" >
+        bookName,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="bookcounts != null" >
+        bookCounts,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookid != null" >
+        #{bookid,jdbcType=BIGINT},
+      </if>
+      <if test="bookname != null" >
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="bookcounts != null" >
+        #{bookcounts,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhang.pojo.BooksExample" resultType="java.lang.Integer" >
+    select count(*) from books
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update books
+    <set >
+      <if test="record.bookid != null" >
+        bookId = #{record.bookid,jdbcType=BIGINT},
+      </if>
+      <if test="record.bookname != null" >
+        bookName = #{record.bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null" >
+        detail = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookcounts != null" >
+        bookCounts = #{record.bookcounts,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update books
+    set bookId = #{record.bookid,jdbcType=BIGINT},
+      bookName = #{record.bookname,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=VARCHAR},
+      bookCounts = #{record.bookcounts,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhang.pojo.Books" >
+    update books
+    <set >
+      <if test="bookname != null" >
+        bookName = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="bookcounts != null" >
+        bookCounts = #{bookcounts,jdbcType=INTEGER},
+      </if>
+    </set>
+    where bookId = #{bookid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhang.pojo.Books" >
+    update books
+    set bookName = #{bookname,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      bookCounts = #{bookcounts,jdbcType=INTEGER}
+    where bookId = #{bookid,jdbcType=BIGINT}
+  </update>
+</mapper>

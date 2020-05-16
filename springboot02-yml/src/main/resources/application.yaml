@@ -1,0 +1,27 @@
+person:
+  name: zhang${random.uuid}
+  sex: nan
+  age: ${random.int}
+  birthdy: 2020/04/21
+  map: {k1: v1,k2: v2}
+  dog:
+    name: ${person.name:hello}旺财
+    age: 2
+
+#springboot多环境配置,可以指定启动哪个端口
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+---
+server:
+  port: 8081
+spring:
+  profiles: test
+---
+server:
+  port: 8082
+spring:
+  profiles: dev
+debug: true
